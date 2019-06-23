@@ -1,14 +1,21 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 def search_engine(text) :
-    driver = webdriver.Chrome(r'C:\Users\KIH\Desktop\chromedriver.exe')
-    driver.implicitly_wait(30) # 을지로3가 맛집 검색의 경우 -> 카페 키워드를 이용한 검색보다 정보를 찾는데 더 많은 시간이 걸리게됨. 따라서 wait 시간이 짧을경우 데이터를 못받아오는 경우가 있음.  (3 -> 30 으로 늘려주었음)
+    driver = webdriver.Chrome(r'C:\Users\smddu\Documents\chromedriver\chromedriver.exe')
+    
     driver.get('https://map.naver.com/')
     driver.find_element_by_id('search-input').send_keys(text)
     driver.find_element_by_xpath('//*[@id="header"]/div[1]/fieldset/button').click()
-
+    WebDriverWait(driver, 10).until(
+		EC.presence_of_element_located(
+			(By.CSS_SELECTOR, '.lst_site')
+		)
+	)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     shop = soup.select('dl > dt > a')
     
