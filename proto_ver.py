@@ -17,7 +17,7 @@ def search_engine(text) :
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.lst_site'))
         )
-        #받아온 내용을 BS로 파싱
+        # 받아온 내용을 BS로 파싱
         soup = BeautifulSoup(driver.page_source, 'html.parser')
     except TimeoutException:
         print('Time Out')
@@ -33,10 +33,8 @@ def search_engine(text) :
     
     shop_id = []
     for i in range(len(shop)) :
-        # find의 attrs 속성을 이용하면 특정 elements에 접근가능하다. 크롤링하고자하는 html은 data-id에 찾고자하는 장소의 id번호가 담겨있음.
+        # 크롤링하고자하는 html은 data-id에 찾고자하는 장소의 id번호가 담겨있음.
         # 접근한 최종 데이터에 [1:] 슬라이싱을 통해 앞에 's'를 삭제해줌 
-        #shop_id.append( soup.find("ul",{"class" : "lst_site"}).find_all("li", attrs = {"data-id" : True})[i]["data-id"][1:] )    
-        # CSS selector로 좀 더 간단하게 구현
         shop_id.append(soup.select('ul.lst_site > li')[i].get('data-id')[1:])
     return shop_id
 
