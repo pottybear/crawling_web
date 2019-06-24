@@ -19,7 +19,6 @@ def search_engine(url) :
     wait(driver, By.CSS_SELECTOR, '.list_wrapper')
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     sh = soup.select("a.name")
-
     c = 1
     for i in sh:
         shop[c] = [i.get("title"), i.get("href")]
@@ -39,7 +38,7 @@ def select_shop():
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('window-size=1920x1080')
-options.add_argument("disable-gpu")
+options.add_argument('disable-gpu')
 driver = webdriver.Chrome(r'C:\Users\smddu\Documents\chromedriver\chromedriver.exe', chrome_options=options)
 
 s = input('검색어를 입력하세요 : ')
