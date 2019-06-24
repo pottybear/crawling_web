@@ -56,8 +56,7 @@ while True:
     elif c == 'y':
         select_shop()
     elif c == 's':
-        for n in range(len(shop)):
-            n+=1
+        for n in range(1, len(shop) + 1):
             print(str(n) + '. ' + shop[n][0])
     else:
         print('잘못 입력하셨습니다')
