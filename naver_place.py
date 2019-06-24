@@ -26,8 +26,7 @@ def search_engine(url) :
         c += 1
     return shop
 
-def select_shop():
-    n = int(input('원하시는 장소의 번호를 입력하세요 : '))
+def select_shop(n):
     # 한 페이지에 가게는 20개이므로, 입력 받은 수가 20을 넘으면 재입력
     while n > 20:
         print('리스트 안의 번호를 선택해주세요')
@@ -43,19 +42,21 @@ driver = webdriver.Chrome(r'C:\Users\smddu\Documents\chromedriver\chromedriver.e
 
 s = input('검색어를 입력하세요 : ')
 url = 'https://store.naver.com/restaurants/list?page=1&query=' + parse.quote(s)
-
 shop = search_engine(url)
-select_shop()
+
+n = int(input('원하시는 장소의 번호를 입력하세요 : '))
+select_shop(n)
 
 while True:
-    c = input('종료하시려면 n, 다른 가게를 보려면 y, 가게 목록을 다시 보려면 s을 입력해주세요 : ')
+    c = input('종료하시려면 n, 가게 목록을 다시 보려면 s, 다른 가게를 보려면 번호를 입력해주세요 : ')
     if c == 'n':
         driver.quit()
         break
-    elif c == 'y':
-        select_shop()
     elif c == 's':
         for n in range(1, len(shop) + 1):
             print(str(n) + '. ' + shop[n][0])
     else:
-        print('잘못 입력하셨습니다')
+        try:
+            select_shop(int(c))
+        except:
+            print('잘못 입력하셨습니다')
